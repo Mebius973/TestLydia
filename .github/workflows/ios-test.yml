@@ -1,0 +1,65 @@
+name: iOS Build & Test with Coverage
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '16'
+
+    - name: Boot iOS Simulator
+      id: boot_simulator
+      run: |
+        SIM_NAME="iPhone 16"
+        SIM_OS="18.2"
+        DEVICE_UDID=$(xcrun simctl list devices | awk -v os="-- iOS $SIM_OS --" -v name="$SIM_NAME" '
+          $0 == os {found=1; next}
+          /^--/ {found=0}
+          found && $0 ~ name {
+            n = split($0, parts, "[()]")
+            print parts[2]
+            exit
+          }
+        ')
+        echo "Booting simulator $SIM_NAME ($SIM_OS) with UDID: $DEVICE_UDID"
+        xcrun simctl boot "$DEVICE_UDID"
+        xcrun simctl bootstatus "$DEVICE_UDID" -b
+        open -a Simulator
+        # Exporter l'UDID en output de l'étape
+        echo "device_udid=$DEVICE_UDID" >> $GITHUB_OUTPUT
+
+    - name: Start mockServer
+      run: ./launch_mockserver.sh
+
+    - name: Run tests with coverage
+      run: |
+        xcodebuild test \
+          -retry-tests-on-failure \
+          -test-iterations 3 \
+          -scheme TestLydia \
+          -sdk iphonesimulator \
+          -destination "platform=iOS Simulator,id=${{ steps.boot_simulator.outputs.device_udid }}" \
+          -enableCodeCoverage YES \
+          -verbose \
+          -resultBundlePath TestResults.xcresult \
+          CODE_SIGNING_ALLOWED=NO 
+
+    - name: Code coverage
+      run: gem install slather; slather;
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}

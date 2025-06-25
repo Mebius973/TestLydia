@@ -1,0 +1,14 @@
+arguments:
+- -project
+- TestLydia.xcodeproj
+- -scheme
+- TestLydia
+- -destination
+- platform=iOS Simulator,name=iPhone 16 Pro
+- test
+executable: /usr/bin/xcodebuild
+exclude:
+- AppDelegate.swift
+- UserListViewController.swift
+- UserDetailViewController.swift
+excludeCalls: []

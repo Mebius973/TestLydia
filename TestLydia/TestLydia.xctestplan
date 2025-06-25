@@ -1,0 +1,32 @@
+{
+  "configurations" : [
+    {
+      "id" : "124F3B11-024A-4B32-8745-34367842BC06",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:TestLydia.xcodeproj",
+        "identifier" : "E9FB940E2E0C1BAF00196680",
+        "name" : "TestLydiaTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:TestLydia.xcodeproj",
+        "identifier" : "E9FB94182E0C1BAF00196680",
+        "name" : "TestLydiaUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

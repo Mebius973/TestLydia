@@ -1,0 +1,5 @@
+coverage_service: cobertura_xml
+xcodeproj: TestLydia.xcodeproj
+scheme: TestLydia
+source_directory: TestLydia
+output_directory: .
