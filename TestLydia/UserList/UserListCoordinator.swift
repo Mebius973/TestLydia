@@ -15,7 +15,7 @@ class UserListCoordinator: Coordinator {
     }
 
     func start() {
-        let viewModel = UserListViewModel()
+        let viewModel = UserListViewModel(coordinator: self)
         presentedViewController = UserListViewController(viewModel: viewModel)
         guard let presentedViewController = presentedViewController else { return }
         push(presentedViewController)

@@ -8,9 +8,20 @@
 import Foundation
 
 class UserService {
-    private let baseApiUrl = "https://randomuser.me/api/?results=10"
+    private let baseApiUrl = "https://randomuser.me/api/"
     
-    func fetchUsers() async throws -> RandomUserResults {
+    func fetchUsers(batchSize: Int) async throws -> RandomUserResults {
+    
+        guard let url = URL(string: formatUrl(batchSize: batchSize)) else {
+            throw URLError(.badURL)
+        }
+        
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let result = try JSONDecoder().decode(RandomUserResults.self, from: data)
+        return result
+    }
+     
+    func fetchNextUsers(seed: String, page: Int, batchSize: Int) async throws -> RandomUserResults {
     
         guard let url = URL(string: baseApiUrl) else {
             throw URLError(.badURL)
@@ -20,5 +31,17 @@ class UserService {
         let result = try JSONDecoder().decode(RandomUserResults.self, from: data)
         return result
     }
+    
+    private func formatUrl(batchSize: Int, seed: String? = nil, page: Int? = nil) -> String {
+        var result = "\(baseApiUrl)?results=\(batchSize)"
+        if let seed = seed {
+            result += "&seed=\(seed)"
+        }
         
+        if let page = page {
+            result += "&page=\(page)"
+        }
+        
+        return result
+    }
 }

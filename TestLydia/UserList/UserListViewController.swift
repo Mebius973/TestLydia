@@ -9,6 +9,7 @@ import UIKit
 class UserListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let viewModel: UserListViewModel
     private let tableView = UITableView()
+    private let refreshControl = UIRefreshControl()
     
     init(viewModel: UserListViewModel) {
           self.viewModel = viewModel
@@ -28,6 +29,9 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.delegate = self
         tableView.register(UserListViewCell.self, forCellReuseIdentifier: "UserCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
@@ -43,6 +47,15 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    @objc private func handleRefresh() {
+            Task {
+                await viewModel.initialLoad()
+                tableView.reloadData()
+                refreshControl.endRefreshing()
+            }
+        }
+
+    
     // MARK: UITableViewDelegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,11 +66,19 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as? UserListViewCell else {
                 return UITableViewCell()
             }
-        let user = viewModel.users[indexPath.row]
-        cell.configure(with: user)
+        Task {
+            let cellModel = await viewModel.getCellModel(for: indexPath.row)
+            cell.configure(with: cellModel)
+        }
         return cell
     }
-
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        // Perform your action here, e.g., show user details
+        viewModel.showUserDetail(for: indexPath.row)
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height

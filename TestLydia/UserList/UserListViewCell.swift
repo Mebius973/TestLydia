@@ -9,45 +9,63 @@
 import UIKit
 
 class UserListViewCell: UITableViewCell {
+    let cardView = UIView()
     let userImageView = UIImageView()
-    let titleLabel = UILabel()
-    let firstNameLabel = UILabel()
-    let lastNameLabel = UILabel()
+    let nameLabel = UILabel()
+    let chevronImageView = UIImageView()
+    
+    private var isLoading = false
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        cardView.translatesAutoresizingMaskIntoConstraints = false
+        cardView.backgroundColor = .systemBackground
+        cardView.layer.cornerRadius = 16
+        cardView.layer.shadowColor = UIColor.black.cgColor
+        cardView.layer.shadowOpacity = 0.08
+        cardView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cardView.layer.shadowRadius = 4
+
         userImageView.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        firstNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        lastNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        chevronImageView.translatesAutoresizingMaskIntoConstraints = false
+
         userImageView.contentMode = .scaleAspectFill
         userImageView.clipsToBounds = true
         userImageView.layer.cornerRadius = 24
 
-        contentView.addSubview(userImageView)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(firstNameLabel)
-        contentView.addSubview(lastNameLabel)
+        chevronImageView.image = UIImage(systemName: "chevron.right")
+        chevronImageView.tintColor = .systemGray3
+        chevronImageView.contentMode = .scaleAspectFit
+
+        contentView.addSubview(cardView)
+        cardView.addSubview(userImageView)
+        cardView.addSubview(nameLabel)
+        cardView.addSubview(chevronImageView)
 
         NSLayoutConstraint.activate([
-            userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            userImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            userImageView.widthAnchor.constraint(equalToConstant: 48),
-            userImageView.heightAnchor.constraint(equalToConstant: 48),
+            cardView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            cardView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            cardView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            cardView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            titleLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            userImageView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 16),
+            userImageView.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
+            userImageView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16),
+            userImageView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -16),
+            userImageView.widthAnchor.constraint(equalToConstant: 96),
+            userImageView.heightAnchor.constraint(equalToConstant: 96),
 
-            firstNameLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-            firstNameLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            firstNameLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            firstNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            nameLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16),
+            nameLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 16),
+            nameLabel.trailingAnchor.constraint(equalTo: chevronImageView.leadingAnchor, constant: -8),
+            nameLabel.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -16),
             
-            lastNameLabel.topAnchor.constraint(equalTo: firstNameLabel.bottomAnchor, constant: 4),
-            lastNameLabel.leadingAnchor.constraint(equalTo: firstNameLabel.leadingAnchor),
-            lastNameLabel.trailingAnchor.constraint(equalTo: firstNameLabel.trailingAnchor),
-            lastNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            chevronImageView.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
+            chevronImageView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -16),
+            chevronImageView.widthAnchor.constraint(equalToConstant: 16),
+            chevronImageView.heightAnchor.constraint(equalToConstant: 24)
         ])
     }
 
@@ -55,25 +73,8 @@ class UserListViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with user: User) {
-        titleLabel.text = user.name.title
-        firstNameLabel.text = user.name.first
-        lastNameLabel.text = user.name.last
-        if let url = URL(string: user.picture.medium) {
-            // Simple async image loading (for demo only)
-            DispatchQueue.global().async {
-                if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.userImageView.image = image
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.userImageView.image = nil
-                    }
-                }
-            }
-        } else {
-            userImageView.image = nil
-        }
+    func configure(with cellModel: UserListViewCellModel) {
+        userImageView.image = cellModel.image
+        nameLabel.text = cellModel.name
     }
 }
