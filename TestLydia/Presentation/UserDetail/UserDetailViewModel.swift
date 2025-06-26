@@ -6,9 +6,9 @@
 //
 
 class UserDetailViewModel {
-    private let user: User
+    let user: UserEntity
 
-    init(user: User) {
+    init(user: UserEntity) {
         self.user = user
     }
 }

@@ -66,10 +66,9 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as? UserListViewCell else {
                 return UITableViewCell()
             }
-        Task {
-            let cellModel = await viewModel.getCellModel(for: indexPath.row)
-            cell.configure(with: cellModel)
-        }
+        
+        let cellModel = viewModel.getCellModel(for: indexPath.row)
+        cell.configure(with: cellModel)
         return cell
     }
     

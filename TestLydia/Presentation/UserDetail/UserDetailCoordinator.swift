@@ -8,9 +8,9 @@ import UIKit
 
 class UserDetailCoordinator: Coordinator {
     var navigationController: UINavigationController
-    var user: User
+    var user: UserEntity
     
-    init(user: User, navigationController: UINavigationController) {
+    init(user: UserEntity, navigationController: UINavigationController) {
         self.user = user
         self.navigationController = navigationController
     }

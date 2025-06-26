@@ -21,7 +21,7 @@ class UserListCoordinator: Coordinator {
         push(presentedViewController)
     }
 
-    func showUserDetail(user: User) {
+    func showUserDetail(user: UserEntity) {
         let coordinator = UserDetailCoordinator(user: user, navigationController: navigationController)
         coordinator.start()
     }

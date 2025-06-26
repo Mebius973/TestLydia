@@ -8,7 +8,15 @@
 import FactoryKit
 
 extension Container {
-    var userService: Factory<UserService> {
-        Factory(self) { UserService() }
+    var userRepository: Factory<UserRepository> {
+        Factory(self) { UserRepositoryImpl() }
+    }
+    
+    var fetchUsersUseCase: Factory<FetchUsersUseCase> {
+        Factory(self) { FetchUsersUseCaseImpl() }
+    }
+    
+    var fetchNextUsersUseCase: Factory<FetchNextUsersUseCase> {
+        Factory(self) { FetchNextUsersUseCaseImpl() }
     }
 }

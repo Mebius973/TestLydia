@@ -9,6 +9,10 @@
 import UIKit
 
 class UserListViewCell: UITableViewCell {
+    struct K {
+        static let defaultImageName = "defaultProfilePicture"
+    }
+    
     let cardView = UIView()
     let userImageView = UIImageView()
     let nameLabel = UILabel()
@@ -73,8 +77,14 @@ class UserListViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with cellModel: UserListViewCellModel) {
-        userImageView.image = cellModel.image
+    func configure(with cellModel: UserCellEntity) {
         nameLabel.text = cellModel.name
+        
+        guard let rawImage = cellModel.rawImage else {
+            userImageView.image = UIImage(named: K.defaultImageName)
+            return
+        }
+        
+        userImageView.image = UIImage(data: rawImage)
     }
 }

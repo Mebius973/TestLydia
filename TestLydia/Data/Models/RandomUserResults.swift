@@ -5,6 +5,7 @@
 //  Created by Mebius on 25/06/2025.
 //
 
+import Foundation
 
 struct RandomUserResults: Codable {
     let users: [User]
