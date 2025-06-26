@@ -12,6 +12,7 @@ class UserDetailViewController: UIViewController {
     }
     
     private let viewModel: UserDetailViewModel
+    private let stackView = UIStackView()
 
     init(viewModel: UserDetailViewModel) {
         self.viewModel = viewModel
@@ -49,63 +50,12 @@ class UserDetailViewController: UIViewController {
             
         }
 
-        let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 16
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .leading
 
-        // Helper to add a label pair
-        func addField(_ title: String, _ value: String?) {
-            let titleLabel = UILabel()
-            titleLabel.text = title
-            titleLabel.font = .systemFont(ofSize: 13, weight: .semibold)
-            let valueLabel = UILabel()
-            valueLabel.text = value ?? "-"
-            valueLabel.font = .systemFont(ofSize: 16)
-            valueLabel.textColor = .secondaryLabel
-            valueLabel.numberOfLines = 0
-            let pairStack = UIStackView(arrangedSubviews: [titleLabel, valueLabel])
-            pairStack.axis = .vertical
-            pairStack.spacing = 2
-            stackView.addArrangedSubview(pairStack)
-        }
-
-        // Add all fields
-        addField("Gender", viewModel.user.gender)
-        addField("Email", viewModel.user.email)
-        addField("Phone", viewModel.user.phone)
-        addField("Cell", viewModel.user.cell)
-        addField("Nationality", viewModel.user.nat)
-        addField("Title", viewModel.user.title)
-        addField("First Name", viewModel.user.firstName)
-        addField("Last Name", viewModel.user.lastName)
-        addField("Street Number", "\(viewModel.user.streetNumber)")
-        addField("Street Name", viewModel.user.streetName)
-        addField("City", viewModel.user.city)
-        addField("State", viewModel.user.state)
-        addField("Country", viewModel.user.country)
-        addField("Postcode", viewModel.user.postcode)
-        addField("Coordinates Latitude", viewModel.user.coordinatesLatitude)
-        addField("Coordinates Longitude", viewModel.user.coordinatesLongitude)
-        addField("Timezone Offset", viewModel.user.timezoneOffset)
-        addField("Timezone Description", viewModel.user.timezoneDescription)
-        addField("Login UUID", viewModel.user.loginUUID)
-        addField("Login Username", viewModel.user.loginUsername)
-        addField("Login Password", viewModel.user.loginPassword)
-        addField("Login Salt", viewModel.user.loginSalt)
-        addField("Login MD5", viewModel.user.loginMD5)
-        addField("Login SHA1", viewModel.user.loginSHA1)
-        addField("Login SHA256", viewModel.user.loginSHA256)
-        addField("Date of Birth", viewModel.user.dobDate)
-        addField("Age", "\(viewModel.user.dobAge)")
-        addField("Registered Date", viewModel.user.registeredDate)
-        addField("Registered Age", "\(viewModel.user.registeredAge)")
-        addField("ID Name", viewModel.user.idName)
-        addField("ID Value", viewModel.user.idValue)
-        addField("Picture Large", viewModel.user.pictureLarge)
-        addField("Picture Medium", viewModel.user.pictureMedium)
-        addField("Picture Thumbnail", viewModel.user.pictureThumbnail)
+        addAllFieldsToStackView()
 
         contentView.addSubview(imageView)
         contentView.addSubview(stackView)
@@ -132,5 +82,57 @@ class UserDetailViewController: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -32)
         ])
+    }
+    
+    private func addAllFieldsToStackView() {
+        addFieldToStackView("Gender", viewModel.user.gender)
+        addFieldToStackView("Email", viewModel.user.email)
+        addFieldToStackView("Phone", viewModel.user.phone)
+        addFieldToStackView("Cell", viewModel.user.cell)
+        addFieldToStackView("Nationality", viewModel.user.nat)
+        addFieldToStackView("Title", viewModel.user.title)
+        addFieldToStackView("First Name", viewModel.user.firstName)
+        addFieldToStackView("Last Name", viewModel.user.lastName)
+        addFieldToStackView("Street Number", "\(viewModel.user.streetNumber)")
+        addFieldToStackView("Street Name", viewModel.user.streetName)
+        addFieldToStackView("City", viewModel.user.city)
+        addFieldToStackView("State", viewModel.user.state)
+        addFieldToStackView("Country", viewModel.user.country)
+        addFieldToStackView("Postcode", viewModel.user.postcode)
+        addFieldToStackView("Coordinates Latitude", viewModel.user.coordinatesLatitude)
+        addFieldToStackView("Coordinates Longitude", viewModel.user.coordinatesLongitude)
+        addFieldToStackView("Timezone Offset", viewModel.user.timezoneOffset)
+        addFieldToStackView("Timezone Description", viewModel.user.timezoneDescription)
+        addFieldToStackView("Login UUID", viewModel.user.loginUUID)
+        addFieldToStackView("Login Username", viewModel.user.loginUsername)
+        addFieldToStackView("Login Password", viewModel.user.loginPassword)
+        addFieldToStackView("Login Salt", viewModel.user.loginSalt)
+        addFieldToStackView("Login MD5", viewModel.user.loginMD5)
+        addFieldToStackView("Login SHA1", viewModel.user.loginSHA1)
+        addFieldToStackView("Login SHA256", viewModel.user.loginSHA256)
+        addFieldToStackView("Date of Birth", viewModel.user.dobDate)
+        addFieldToStackView("Age", "\(viewModel.user.dobAge)")
+        addFieldToStackView("Registered Date", viewModel.user.registeredDate)
+        addFieldToStackView("Registered Age", "\(viewModel.user.registeredAge)")
+        addFieldToStackView("ID Name", viewModel.user.idName)
+        addFieldToStackView("ID Value", viewModel.user.idValue)
+        addFieldToStackView("Picture Large", viewModel.user.pictureLarge)
+        addFieldToStackView("Picture Medium", viewModel.user.pictureMedium)
+        addFieldToStackView("Picture Thumbnail", viewModel.user.pictureThumbnail)
+    }
+    
+    private func addFieldToStackView(_ title: String, _ value: String?) {
+        let titleLabel = UILabel()
+        titleLabel.text = title
+        titleLabel.font = .systemFont(ofSize: 13, weight: .semibold)
+        let valueLabel = UILabel()
+        valueLabel.text = value ?? "-"
+        valueLabel.font = .systemFont(ofSize: 16)
+        valueLabel.textColor = .secondaryLabel
+        valueLabel.numberOfLines = 0
+        let pairStack = UIStackView(arrangedSubviews: [titleLabel, valueLabel])
+        pairStack.axis = .vertical
+        pairStack.spacing = 2
+        stackView.addArrangedSubview(pairStack)
     }
 }
