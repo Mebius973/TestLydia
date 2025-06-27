@@ -9,10 +9,19 @@ import Foundation
 
 class UserRepositoryImpl: UserRepository {
     private let baseApiUrl = "https://randomuser.me/api/"
+    private let imageCache = NSCache<NSString, NSData>()
     
-    func fetchUsers(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntitiy) {
+    func fetchInitialUsers(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntitiy) {
+        try await fetchUsers(batchSize: batchSize, useCache: true)
+    }
     
-        guard let url = URL(string: formatUrl(batchSize: batchSize)) else {
+    func fetchNewUsers(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntitiy) {
+       try await fetchUsers(batchSize: batchSize, useCache: false)
+    }
+     
+    func fetchNextUsers(seed: String, page: Int, batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntitiy) {
+    
+        guard let url = URL(string: formatUrl(batchSize: batchSize, seed: seed, page: page)) else {
             throw URLError(.badURL)
         }
         
@@ -23,19 +32,27 @@ class UserRepositoryImpl: UserRepository {
 
         return (users, result.info.asEntity())
     }
-     
-    func fetchNextUsers(seed: String, page: Int, batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntitiy) {
     
-        guard let url = URL(string: baseApiUrl) else {
-            throw URLError(.badURL)
+    private func fetchUsers(batchSize: Int, useCache: Bool) async throws -> ([UserEntity], PaginationInfoEntitiy) {
+        do {
+            guard let url = URL(string: formatUrl(batchSize: batchSize)) else {
+                throw URLError(.badURL)
+            }
+            
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let result = try JSONDecoder().decode(RandomUserResults.self, from: data)
+            
+            let users: [UserEntity] = try await extractEntities(from: result)
+            let pagination = result.info.asEntity()
+            
+            CacheManager.saveUsersToCache(users, pagination: pagination)
+            
+            return (users, pagination)
+        } catch {
+            guard useCache,
+                  let (cachedUsers, cachedPagination) = CacheManager.loadFromCache() else { throw error }
+            return (cachedUsers, cachedPagination)
         }
-        
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let result = try JSONDecoder().decode(RandomUserResults.self, from: data)
-        
-        let users: [UserEntity] = try await extractEntities(from: result)
-
-        return (users, result.info.asEntity())
     }
     
     private func formatUrl(batchSize: Int, seed: String? = nil, page: Int? = nil) -> String {
@@ -64,11 +81,16 @@ class UserRepositoryImpl: UserRepository {
         }
     }
     
-    private func getImage(_ url: String) async -> Data? {
-        guard let url = URL(string: url) else { return nil }
+    private func getImage(_ urlString: String) async -> Data? {
+        guard let url = URL(string: urlString) else { return nil }
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            return data
+            if let imageData = imageCache.object(forKey: urlString as NSString) {
+                return Data(referencing: imageData)
+            } else {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                imageCache.setObject(data as NSData, forKey: urlString as NSString)
+                return data
+            }
         } catch {
             print("no Image")
             return nil

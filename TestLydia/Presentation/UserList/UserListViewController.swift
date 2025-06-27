@@ -42,15 +42,19 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
         ])
 
         Task {
-            await viewModel.loadMore()
-            tableView.reloadData()
+            await viewModel.initialLoad()
+            if viewModel.dataNeedsReload {
+                tableView.reloadData()
+            }
         }
     }
     
     @objc private func handleRefresh() {
             Task {
                 await viewModel.initialLoad()
-                tableView.reloadData()
+                if viewModel.dataNeedsReload {
+                    tableView.reloadData()
+                }
                 refreshControl.endRefreshing()
             }
         }
@@ -83,10 +87,12 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
 
-        if offsetY > contentHeight - height * 2 {
+        if offsetY > contentHeight - height * 2, !viewModel.isLoading {
             Task {
                 await viewModel.loadMore()
-                tableView.reloadData()
+                if viewModel.dataNeedsReload {
+                    tableView.reloadData()
+                }
             }
         }
     }

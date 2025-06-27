@@ -15,6 +15,6 @@ final class FetchUsersUseCaseImpl: FetchUsersUseCase {
     @Injected(\.userRepository) private var userRepository: UserRepository
 
     func execute(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntitiy) {
-        return try await userRepository.fetchUsers(batchSize: batchSize)
+        return try await userRepository.fetchInitialUsers(batchSize: batchSize)
     }
 }

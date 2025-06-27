@@ -18,7 +18,7 @@ final class FetchNextUsersUseCaseImpl: FetchNextUsersUseCase {
         if let paginationInfo, currentPage < paginationInfo.page {
             return try await userRepository.fetchNextUsers(seed: paginationInfo.seed, page: paginationInfo.page, batchSize: batchSize)
         } else {
-            return try await userRepository.fetchUsers(batchSize: batchSize)
+            return try await userRepository.fetchNewUsers(batchSize: batchSize)
         }
     }
 }
