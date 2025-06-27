@@ -5,11 +5,13 @@
 //  Created by David Geoffroy on 25/06/2025.
 //
 import UIKit
+import Combine
 
 class UserListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let viewModel: UserListViewModel
     private let tableView = UITableView()
     private let refreshControl = UIRefreshControl()
+    private var cancellables = Set<AnyCancellable>()
     
     init(viewModel: UserListViewModel) {
           self.viewModel = viewModel
@@ -41,23 +43,26 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
 
+        viewModel.dataNeedsReload
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+               self?.tableView.reloadData()
+                if self?.refreshControl.isRefreshing == true {
+                    self?.refreshControl.endRefreshing()
+                }
+            }
+            .store(in: &cancellables)
+        
         Task {
             await viewModel.initialLoad()
-            if viewModel.dataNeedsReload {
-                tableView.reloadData()
-            }
         }
     }
     
     @objc private func handleRefresh() {
-            Task {
-                await viewModel.initialLoad()
-                if viewModel.dataNeedsReload {
-                    tableView.reloadData()
-                }
-                refreshControl.endRefreshing()
-            }
+        Task {
+            await viewModel.initialLoad()
         }
+    }
 
     
     // MARK: UITableViewDelegate
@@ -90,9 +95,6 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
         if offsetY > contentHeight - height * 2, !viewModel.isLoading {
             Task {
                 await viewModel.loadMore()
-                if viewModel.dataNeedsReload {
-                    tableView.reloadData()
-                }
             }
         }
     }

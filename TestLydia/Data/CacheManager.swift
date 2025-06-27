@@ -12,15 +12,15 @@ class CacheManager {
         static let paginationCacheKey = "cachedPagination"
     }
     
-    static func loadFromCache() -> ([UserEntity], PaginationInfoEntitiy)? {
+    static func loadFromCache() -> ([UserEntity], PaginationInfoEntity)? {
         guard let rawUsers = UserDefaults.standard.data(forKey: K.usersCacheKey),
               let rawPagination = UserDefaults.standard.data(forKey: K.paginationCacheKey),
               let cachedUsers = try? JSONDecoder().decode([UserEntity].self, from: rawUsers),
-              let cachedPagination = try? JSONDecoder().decode(PaginationInfoEntitiy.self, from: rawPagination) else { return nil }
+              let cachedPagination = try? JSONDecoder().decode(PaginationInfoEntity.self, from: rawPagination) else { return nil }
         return (cachedUsers, cachedPagination)
      }
 
-    static func saveUsersToCache(_ users: [UserEntity], pagination: PaginationInfoEntitiy) {
+    static func saveUsersToCache(_ users: [UserEntity], pagination: PaginationInfoEntity) {
         var cachedUsers = getUsersFromCache()
             cachedUsers.append(contentsOf: users)
          guard let rawUsers = try? JSONEncoder().encode(cachedUsers),

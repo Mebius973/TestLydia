@@ -8,13 +8,13 @@
 import FactoryKit
 
 protocol FetchUsersUseCase {
-    func execute(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntitiy)
+    func execute(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntity)
 }
 
 final class FetchUsersUseCaseImpl: FetchUsersUseCase {
     @Injected(\.userRepository) private var userRepository: UserRepository
 
-    func execute(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntitiy) {
+    func execute(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntity) {
         return try await userRepository.fetchInitialUsers(batchSize: batchSize)
     }
 }

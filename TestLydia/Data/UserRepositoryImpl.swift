@@ -11,15 +11,15 @@ class UserRepositoryImpl: UserRepository {
     private let baseApiUrl = "https://randomuser.me/api/"
     private let imageCache = NSCache<NSString, NSData>()
     
-    func fetchInitialUsers(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntitiy) {
+    func fetchInitialUsers(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntity) {
         try await fetchUsers(batchSize: batchSize, useCache: true)
     }
     
-    func fetchNewUsers(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntitiy) {
+    func fetchNewUsers(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntity) {
        try await fetchUsers(batchSize: batchSize, useCache: false)
     }
      
-    func fetchNextUsers(seed: String, page: Int, batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntitiy) {
+    func fetchNextUsers(seed: String, page: Int, batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntity) {
     
         guard let url = URL(string: formatUrl(batchSize: batchSize, seed: seed, page: page)) else {
             throw URLError(.badURL)
@@ -33,7 +33,7 @@ class UserRepositoryImpl: UserRepository {
         return (users, result.info.asEntity())
     }
     
-    private func fetchUsers(batchSize: Int, useCache: Bool) async throws -> ([UserEntity], PaginationInfoEntitiy) {
+    private func fetchUsers(batchSize: Int, useCache: Bool) async throws -> ([UserEntity], PaginationInfoEntity) {
         do {
             guard let url = URL(string: formatUrl(batchSize: batchSize)) else {
                 throw URLError(.badURL)

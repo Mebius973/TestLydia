@@ -13,8 +13,8 @@ struct Info: Codable {
 }
 
 extension Info {
-    func asEntity() -> PaginationInfoEntitiy {
-        return PaginationInfoEntitiy(
+    func asEntity() -> PaginationInfoEntity {
+        return PaginationInfoEntity(
             seed: self.seed,
             results: self.results,
             page: self.page

@@ -6,6 +6,7 @@
 //
 import FactoryKit
 import UIKit
+import Combine
 
 class UserListViewModel {
     struct K {
@@ -16,13 +17,19 @@ class UserListViewModel {
         return users.count
     }
     var isLoading = false
-    var dataNeedsReload: Bool = false
+    let dataNeedsReload = PassthroughSubject<Void, Never>()
+    var isError = false
     
     @Injected(\.fetchUsersUseCase) private var fetchUsersUseCase: FetchUsersUseCase
     @Injected(\.fetchNextUsersUseCase) private var fetchNextUsersUseCase: FetchNextUsersUseCase
     
     private var users: [UserEntity] = []
-    private var paginationInfo: PaginationInfoEntitiy?
+    private var paginationInfo: PaginationInfoEntity? {
+        didSet {
+            guard let paginationInfo = paginationInfo else { return }
+                currentPage = paginationInfo.page
+        }
+    }
     private var currentPage: Int = 1
     private let coordinator: UserListCoordinator
     
@@ -33,14 +40,14 @@ class UserListViewModel {
     func initialLoad() async {
         guard !isLoading else { return }
         isLoading = true
-        dataNeedsReload = false
         
         do {
             (users, paginationInfo) = try await fetchUsersUseCase.execute(batchSize: K.batchSize)
             isLoading = false
-            dataNeedsReload = true
+            dataNeedsReload.send()
         } catch {
             print("Error fetching users: \(error)")
+            isError = true
             isLoading = false
         }
     }
@@ -48,17 +55,17 @@ class UserListViewModel {
     func loadMore() async {
         guard !isLoading else { return }
         isLoading = true
-        dataNeedsReload = false
 
         do {
             var newUsers: [UserEntity]
             (newUsers, paginationInfo) = try await fetchNextUsersUseCase.execute(batchSize: K.batchSize, currentPage: currentPage, paginationInfo: paginationInfo)
             
             self.users.append(contentsOf: newUsers)
-            dataNeedsReload = true
             isLoading = false
+            dataNeedsReload.send()
         } catch {
             print("Error fetching users: \(error)")
+            isError = true
             isLoading = false
         }
     }
