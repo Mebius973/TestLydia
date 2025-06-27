@@ -18,7 +18,8 @@ class UserListViewModel {
     }
     var isLoading = false
     let dataNeedsReload = PassthroughSubject<Void, Never>()
-    var isError = false
+    let initErrorPublisher = PassthroughSubject<String, Never>()
+    let loadMoreErrorPublisher = PassthroughSubject<String, Never>()
     
     @Injected(\.fetchUsersUseCase) private var fetchUsersUseCase: FetchUsersUseCase
     @Injected(\.fetchNextUsersUseCase) private var fetchNextUsersUseCase: FetchNextUsersUseCase
@@ -46,8 +47,7 @@ class UserListViewModel {
             isLoading = false
             dataNeedsReload.send()
         } catch {
-            print("Error fetching users: \(error)")
-            isError = true
+            initErrorPublisher.send("Failed to load users: \(error.localizedDescription)")
             isLoading = false
         }
     }
@@ -64,8 +64,7 @@ class UserListViewModel {
             isLoading = false
             dataNeedsReload.send()
         } catch {
-            print("Error fetching users: \(error)")
-            isError = true
+            loadMoreErrorPublisher.send("Failed to load users: \(error.localizedDescription)")
             isLoading = false
         }
     }

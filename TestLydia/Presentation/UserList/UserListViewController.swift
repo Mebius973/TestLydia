@@ -11,6 +11,7 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
     let viewModel: UserListViewModel
     private let tableView = UITableView()
     private let refreshControl = UIRefreshControl()
+    private let footerLabel: UILabel = UILabel()
     private var cancellables = Set<AnyCancellable>()
     
     init(viewModel: UserListViewModel) {
@@ -24,7 +25,15 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupUI()
+        setupCombine()
+        
+        Task {
+            await viewModel.initialLoad()
+        }
+    }
+    
+    private func setupUI() {
         view.backgroundColor = .systemBackground
 
         tableView.dataSource = self
@@ -42,7 +51,23 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-
+        
+        setupFooterMessage()
+    }
+    
+    private func setupFooterMessage() {
+        footerLabel.text = "To see more, please reconnect to the internet."
+        footerLabel.textAlignment = .center
+        footerLabel.textColor = .secondaryLabel
+        footerLabel.font = UIFont.systemFont(ofSize: 15)
+        footerLabel.numberOfLines = 0
+        footerLabel.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 60)
+        tableView.tableFooterView = footerLabel
+        
+        footerLabel.isHidden = true
+    }
+    
+    private func setupCombine() {
         viewModel.dataNeedsReload
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
@@ -53,9 +78,21 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             .store(in: &cancellables)
         
-        Task {
-            await viewModel.initialLoad()
-        }
+        viewModel.initErrorPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] message in
+                let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self?.present(alert, animated: true)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.loadMoreErrorPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] message in
+                self?.footerLabel.isHidden = false
+            }
+            .store(in: &cancellables)
     }
     
     @objc private func handleRefresh() {
