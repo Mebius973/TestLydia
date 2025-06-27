@@ -52,8 +52,31 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
         
+        #if DEBUG
+        if ProcessInfo.processInfo.environment["UI_TEST_MODE"] == "1" {
+            let testRefreshButton = UIBarButtonItem(title: "🔄", style: .plain, target: self, action: #selector(handleRefresh))
+            let testScrollToBottomButton = UIBarButtonItem(title: "↓", style: .plain, target: self, action: #selector(scrollToBottom))
+            navigationItem.leftBarButtonItem = testRefreshButton
+            navigationItem.rightBarButtonItem = testScrollToBottomButton
+        }
+        #endif
+
+        
         setupFooterMessage()
     }
+    
+    #if DEBUG
+    @objc private func scrollToBottom() {
+        let lastSection = tableView.numberOfSections - 1
+        guard lastSection >= 0 else { return }
+
+        let lastRow = tableView.numberOfRows(inSection: lastSection) - 1
+        guard lastRow >= 0 else { return }
+
+        let indexPath = IndexPath(row: lastRow, section: lastSection)
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+    }
+    #endif
     
     private func setupFooterMessage() {
         footerLabel.text = "To see more, please reconnect to the internet."
@@ -81,9 +104,15 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
         viewModel.initErrorPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] message in
-                let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self?.present(alert, animated: true)
+                if self?.refreshControl.isRefreshing == true {
+                    self?.refreshControl.endRefreshing()
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                    let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self?.present(alert, animated: true)
+                }
             }
             .store(in: &cancellables)
         
@@ -97,10 +126,9 @@ class UserListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @objc private func handleRefresh() {
         Task {
-            await viewModel.initialLoad()
+            await viewModel.refresh()
         }
     }
-
     
     // MARK: UITableViewDelegate
     

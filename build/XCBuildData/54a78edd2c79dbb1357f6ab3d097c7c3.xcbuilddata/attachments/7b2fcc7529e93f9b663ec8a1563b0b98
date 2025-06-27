@@ -1,0 +1,165 @@
+{
+  "" : {
+    "const-values" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/TestLydia-master.swiftconstvalues",
+    "dependencies" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/TestLydia-master.d",
+    "diagnostics" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/TestLydia-master.dia",
+    "emit-module-dependencies" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/TestLydia-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/TestLydia-master-emit-module.dia",
+    "swift-dependencies" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/TestLydia-master.swiftdeps"
+  },
+  "/Users/mebius/TestLydia/TestLydia/AppDelegate.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/AppDelegate.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/AppDelegate.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/AppDelegate.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Common/Coordinator.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Coordinator.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Coordinator.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Coordinator.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/DIManager.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/DIManager.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/DIManager.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/DIManager.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/CacheManager.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/CacheManager.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/CacheManager.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/CacheManager.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/Models/Coordinates.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Coordinates.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Coordinates.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Coordinates.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/Models/Dob.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Dob.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Dob.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Dob.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/Models/ID.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/ID.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/ID.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/ID.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/Models/Info.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Info.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Info.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Info.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/Models/Location.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Location.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Location.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Location.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/Models/Login.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Login.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Login.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Login.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/Models/Name.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Name.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Name.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Name.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/Models/Picture.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Picture.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Picture.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Picture.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/Models/RandomUserResults.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/RandomUserResults.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/RandomUserResults.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/RandomUserResults.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/Models/Street.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Street.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Street.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Street.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/Models/Timezone.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Timezone.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Timezone.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/Timezone.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/Models/User.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/User.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/User.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/User.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Data/UserRepositoryImpl.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserRepositoryImpl.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserRepositoryImpl.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserRepositoryImpl.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Domain/Entities/PaginationInfoEntity.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/PaginationInfoEntity.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/PaginationInfoEntity.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/PaginationInfoEntity.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Domain/Entities/UserCellEntity.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserCellEntity.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserCellEntity.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserCellEntity.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Domain/Entities/UserEntity.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserEntity.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserEntity.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserEntity.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Domain/UseCases/FetchNextUsersUseCase.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/FetchNextUsersUseCase.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/FetchNextUsersUseCase.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/FetchNextUsersUseCase.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Domain/UseCases/FetchUsersUseCase.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/FetchUsersUseCase.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/FetchUsersUseCase.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/FetchUsersUseCase.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Domain/UserRepository.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserRepository.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserRepository.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserRepository.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Presentation/UserDetail/UserDetailCoordinator.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserDetailCoordinator.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserDetailCoordinator.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserDetailCoordinator.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Presentation/UserDetail/UserDetailViewController.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserDetailViewController.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserDetailViewController.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserDetailViewController.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Presentation/UserDetail/UserDetailViewModel.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserDetailViewModel.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserDetailViewModel.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserDetailViewModel.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Presentation/UserList/UserListCoordinator.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserListCoordinator.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserListCoordinator.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserListCoordinator.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Presentation/UserList/UserListViewCell.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserListViewCell.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserListViewCell.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserListViewCell.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Presentation/UserList/UserListViewController.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserListViewController.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserListViewController.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserListViewController.o"
+  },
+  "/Users/mebius/TestLydia/TestLydia/Presentation/UserList/UserListViewModel.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserListViewModel.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserListViewModel.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/UserListViewModel.o"
+  },
+  "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "index-unit-output-path" : "/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/mebius/TestLydia/build/TestLydia.build/Release-iphoneos/TestLydia.build/Objects-normal/arm64/GeneratedAssetSymbols.o"
+  }
+}

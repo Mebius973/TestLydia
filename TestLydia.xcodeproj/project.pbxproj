@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E97CFF1C2E0C446900A1C965 /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = E97CFF1B2E0C446900A1C965 /* FactoryKit */; };
+		E9E558902E0F3E3D0060C501 /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9E5588F2E0F3E3D0060C501 /* FactoryKit */; };
+		E9E558922E0F3E410060C501 /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9E558912E0F3E410060C501 /* FactoryKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +35,16 @@
 		E9FB94192E0C1BAF00196680 /* TestLydiaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestLydiaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		E9EF05532E0F40AB00FFF39B /* Exceptions for "TestLydiaTests" folder in "TestLydiaTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Mocks/MockUserRepository.swift,
+			);
+			target = E9FB940E2E0C1BAF00196680 /* TestLydiaTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E9FB94032E0C1BAE00196680 /* TestLydia */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -41,6 +53,9 @@
 		};
 		E9FB94122E0C1BAF00196680 /* TestLydiaTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E9EF05532E0F40AB00FFF39B /* Exceptions for "TestLydiaTests" folder in "TestLydiaTests" target */,
+			);
 			path = TestLydiaTests;
 			sourceTree = "<group>";
 		};
@@ -64,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9E558922E0F3E410060C501 /* FactoryKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,18 +87,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9E558902E0F3E3D0060C501 /* FactoryKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E9E558652E0F3D0F0060C501 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E9FB93F82E0C1BAE00196680 = {
 			isa = PBXGroup;
 			children = (
 				E9FB94032E0C1BAE00196680 /* TestLydia */,
 				E9FB94122E0C1BAF00196680 /* TestLydiaTests */,
 				E9FB941C2E0C1BAF00196680 /* TestLydiaUITests */,
+				E9E558652E0F3D0F0060C501 /* Frameworks */,
 				E9FB94022E0C1BAE00196680 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -141,6 +166,7 @@
 			);
 			name = TestLydiaTests;
 			packageProductDependencies = (
+				E9E558912E0F3E410060C501 /* FactoryKit */,
 			);
 			productName = TestLydiaTests;
 			productReference = E9FB940F2E0C1BAF00196680 /* TestLydiaTests.xctest */;
@@ -153,6 +179,7 @@
 				E9FB94152E0C1BAF00196680 /* Sources */,
 				E9FB94162E0C1BAF00196680 /* Frameworks */,
 				E9FB94172E0C1BAF00196680 /* Resources */,
+				E9EF055E2E0F60E400FFF39B /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -164,6 +191,7 @@
 			);
 			name = TestLydiaUITests;
 			packageProductDependencies = (
+				E9E5588F2E0F3E3D0060C501 /* FactoryKit */,
 			);
 			productName = TestLydiaUITests;
 			productReference = E9FB94192E0C1BAF00196680 /* TestLydiaUITests.xctest */;
@@ -240,6 +268,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E9EF055E2E0F60E400FFF39B /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\n# === CONFIGURATION ===\nJAR_NAME=\"mockserver.jar\"\nJAR_PATH=\"./$JAR_NAME\"\nSTUB_DIR=\"./TestStubs\"\nPORT=1080\nJAVA_CMD=$(which java)\n\n# === CHECKS ===\nif [ ! -f \"$JAR_PATH\" ]; then\n  echo \"❌ Erreur : $JAR_NAME introuvable dans le répertoire courant.\"\n  echo \"Télécharge-le depuis :\"\n  echo \"👉 https://repo1.maven.org/maven2/org/mock-server/mockserver-netty/5.15.0/\"\n  exit 1\nfi\n\nif [ ! -x \"$JAVA_CMD\" ]; then\n  echo \"❌ Java n'est pas installé ou non disponible dans le PATH.\"\n  exit 1\nfi\n\n# === LANCEMENT MOCKSERVER ===\necho \"🚀 Lancement de MockServer sur le port $PORT...\"\njava -jar \"$JAR_PATH\" -serverPort $PORT > mockserver.log 2>&1 & disown\n\n# Attendre que MockServer soit prêt\nsleep 2\n\n# === CHARGEMENT DES STUBS ===\necho \"📦 Chargement des expectations depuis $STUB_DIR\"\n\nfor stub in \"$STUB_DIR\"/*.json; do\n  echo \"→ Envoi de $stub\"\n  curl -s -X PUT \"http://localhost:$PORT/mockserver/expectation\" \\\n    -H \"Content-Type: application/json\" \\\n    -d @\"$stub\" > /dev/null\ndone\n\necho \"✅ Tous les stubs ont été chargés !\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E9FB93FD2E0C1BAE00196680 /* Sources */ = {
@@ -414,8 +464,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -454,8 +504,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -488,10 +538,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.geoffroy.TestLydiaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestLydia.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestLydia";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
@@ -511,10 +562,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.geoffroy.TestLydiaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestLydia.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestLydia";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
@@ -533,10 +585,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.geoffroy.TestLydiaUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = TestLydia;
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
@@ -555,10 +608,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.geoffroy.TestLydiaUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = TestLydia;
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
@@ -618,6 +672,16 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		E97CFF1B2E0C446900A1C965 /* FactoryKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E97CFF172E0C40D200A1C965 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = FactoryKit;
+		};
+		E9E5588F2E0F3E3D0060C501 /* FactoryKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E97CFF172E0C40D200A1C965 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = FactoryKit;
+		};
+		E9E558912E0F3E410060C501 /* FactoryKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E97CFF172E0C40D200A1C965 /* XCRemoteSwiftPackageReference "Factory" */;
 			productName = FactoryKit;

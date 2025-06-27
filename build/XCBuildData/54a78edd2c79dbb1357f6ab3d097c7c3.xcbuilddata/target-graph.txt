@@ -1,0 +1,9 @@
+Target dependency graph (4 targets)
+Target 'TestLydia' in project 'TestLydia'
+➜ Explicit dependency on target 'FactoryKit' in project 'Factory'
+Target 'FactoryKit' in project 'Factory'
+➜ Explicit dependency on target 'FactoryKit' in project 'Factory'
+➜ Explicit dependency on target 'Factory_FactoryKit' in project 'Factory'
+Target 'FactoryKit' in project 'Factory'
+➜ Explicit dependency on target 'Factory_FactoryKit' in project 'Factory'
+Target 'Factory_FactoryKit' in project 'Factory' (no dependencies)

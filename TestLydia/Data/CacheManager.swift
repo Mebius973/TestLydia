@@ -9,24 +9,19 @@ import Foundation
 class CacheManager {
     private struct K {
         static let usersCacheKey = "cachedUsers"
-        static let paginationCacheKey = "cachedPagination"
     }
     
-    static func loadFromCache() -> ([UserEntity], PaginationInfoEntity)? {
+    static func loadFromCache() -> [UserEntity]? {
         guard let rawUsers = UserDefaults.standard.data(forKey: K.usersCacheKey),
-              let rawPagination = UserDefaults.standard.data(forKey: K.paginationCacheKey),
-              let cachedUsers = try? JSONDecoder().decode([UserEntity].self, from: rawUsers),
-              let cachedPagination = try? JSONDecoder().decode(PaginationInfoEntity.self, from: rawPagination) else { return nil }
-        return (cachedUsers, cachedPagination)
+              let cachedUsers = try? JSONDecoder().decode([UserEntity].self, from: rawUsers) else { return nil }
+        return cachedUsers
      }
 
-    static func saveUsersToCache(_ users: [UserEntity], pagination: PaginationInfoEntity) {
+    static func saveUsersToCache(_ users: [UserEntity]) {
         var cachedUsers = getUsersFromCache()
             cachedUsers.append(contentsOf: users)
-         guard let rawUsers = try? JSONEncoder().encode(cachedUsers),
-               let rawPagination = try? JSONEncoder().encode(pagination) else { return }
+         guard let rawUsers = try? JSONEncoder().encode(cachedUsers) else { return }
         UserDefaults.standard.set(rawUsers, forKey: K.usersCacheKey)
-        UserDefaults.standard.set(rawPagination, forKey: K.paginationCacheKey)
      }
     
     private static func getUsersFromCache() -> [UserEntity] {

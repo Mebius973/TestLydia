@@ -8,64 +8,43 @@
 import Foundation
 
 class UserRepositoryImpl: UserRepository {
-    private let baseApiUrl = "https://randomuser.me/api/"
+    private var baseApiUrl: URL? {
+        #if DEBUG
+        if let custom = ProcessInfo.processInfo.environment["API_BASE_URL"],
+           let url = URL(string: custom) {
+            return url
+        }
+        #endif
+        return URL(string: "https://randomuser.me/api/")
+        
+    }
+    
     private let imageCache = NSCache<NSString, NSData>()
     
-    func fetchInitialUsers(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntity) {
+    func fetchInitialUsers(batchSize: Int) async throws -> [UserEntity] {
         try await fetchUsers(batchSize: batchSize, useCache: true)
     }
     
-    func fetchNewUsers(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntity) {
+    func fetchNewUsers(batchSize: Int) async throws -> [UserEntity] {
        try await fetchUsers(batchSize: batchSize, useCache: false)
     }
-     
-    func fetchNextUsers(seed: String, page: Int, batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntity) {
     
-        guard let url = URL(string: formatUrl(batchSize: batchSize, seed: seed, page: page)) else {
-            throw URLError(.badURL)
-        }
-        
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let result = try JSONDecoder().decode(RandomUserResults.self, from: data)
-        
-        let users: [UserEntity] = try await extractEntities(from: result)
-
-        return (users, result.info.asEntity())
-    }
-    
-    private func fetchUsers(batchSize: Int, useCache: Bool) async throws -> ([UserEntity], PaginationInfoEntity) {
+    private func fetchUsers(batchSize: Int, useCache: Bool) async throws -> [UserEntity] {
         do {
-            guard let url = URL(string: formatUrl(batchSize: batchSize)) else {
-                throw URLError(.badURL)
-            }
-            
+            let url = try makeApiURL(batchSize: batchSize)
             let (data, _) = try await URLSession.shared.data(from: url)
             let result = try JSONDecoder().decode(RandomUserResults.self, from: data)
             
             let users: [UserEntity] = try await extractEntities(from: result)
-            let pagination = result.info.asEntity()
+
+            CacheManager.saveUsersToCache(users)
             
-            CacheManager.saveUsersToCache(users, pagination: pagination)
-            
-            return (users, pagination)
+            return users
         } catch {
             guard useCache,
-                  let (cachedUsers, cachedPagination) = CacheManager.loadFromCache() else { throw error }
-            return (cachedUsers, cachedPagination)
+                  let cachedUsers = CacheManager.loadFromCache() else { throw error }
+            return cachedUsers
         }
-    }
-    
-    private func formatUrl(batchSize: Int, seed: String? = nil, page: Int? = nil) -> String {
-        var result = "\(baseApiUrl)?results=\(batchSize)"
-        if let seed = seed {
-            result += "&seed=\(seed)"
-        }
-        
-        if let page = page {
-            result += "&page=\(page)"
-        }
-        
-        return result
     }
     
     private func extractEntities(from result: RandomUserResults) async throws -> [UserEntity] {
@@ -95,5 +74,19 @@ class UserRepositoryImpl: UserRepository {
             print("no Image")
             return nil
         }
+    }
+    
+    private func makeApiURL(batchSize: Int) throws -> URL {
+        guard let baseApiUrl else {
+            throw URLError(.badURL)
+        }
+        var components = URLComponents(url: baseApiUrl, resolvingAgainstBaseURL: false)!
+        
+        // Ajoute ou remplace les query items existants
+        var queryItems = components.queryItems ?? []
+        queryItems.append(URLQueryItem(name: "results", value: "\(batchSize)"))
+        components.queryItems = queryItems
+
+        return components.url!
     }
 }

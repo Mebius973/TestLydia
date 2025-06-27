@@ -25,13 +25,6 @@ class UserListViewModel {
     @Injected(\.fetchNextUsersUseCase) private var fetchNextUsersUseCase: FetchNextUsersUseCase
     
     private var users: [UserEntity] = []
-    private var paginationInfo: PaginationInfoEntity? {
-        didSet {
-            guard let paginationInfo = paginationInfo else { return }
-                currentPage = paginationInfo.page
-        }
-    }
-    private var currentPage: Int = 1
     private let coordinator: UserListCoordinator
     
     init(coordinator: UserListCoordinator) {
@@ -43,7 +36,21 @@ class UserListViewModel {
         isLoading = true
         
         do {
-            (users, paginationInfo) = try await fetchUsersUseCase.execute(batchSize: K.batchSize)
+            users = try await fetchUsersUseCase.execute(batchSize: K.batchSize)
+            isLoading = false
+            dataNeedsReload.send()
+        } catch {
+            initErrorPublisher.send("Failed to load users: \(error.localizedDescription)")
+            isLoading = false
+        }
+    }
+    
+    func refresh() async {
+        guard !isLoading else { return }
+        isLoading = true
+        
+        do {
+            users = try await fetchNextUsersUseCase.execute(batchSize: K.batchSize)
             isLoading = false
             dataNeedsReload.send()
         } catch {
@@ -58,7 +65,7 @@ class UserListViewModel {
 
         do {
             var newUsers: [UserEntity]
-            (newUsers, paginationInfo) = try await fetchNextUsersUseCase.execute(batchSize: K.batchSize, currentPage: currentPage, paginationInfo: paginationInfo)
+            newUsers = try await fetchNextUsersUseCase.execute(batchSize: K.batchSize)
             
             self.users.append(contentsOf: newUsers)
             isLoading = false

@@ -11,13 +11,3 @@ struct Info: Codable {
     let results, page: Int
     let version: String
 }
-
-extension Info {
-    func asEntity() -> PaginationInfoEntity {
-        return PaginationInfoEntity(
-            seed: self.seed,
-            results: self.results,
-            page: self.page
-        )
-    }
-}

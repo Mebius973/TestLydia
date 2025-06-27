@@ -1,0 +1,17 @@
+{
+  "httpRequest": {
+    "method": "GET",
+    "path": "/api",
+    "queryStringParameters": {
+      "mode": ["loadmore-error"]
+    }
+  },
+  "httpResponse": {
+    "statusCode": 500,
+    "body": "{\"error\":\"Internal Server Error\"}",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
+

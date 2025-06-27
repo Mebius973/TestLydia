@@ -6,7 +6,6 @@
 //
 
 protocol UserRepository {
-    func fetchInitialUsers(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntity)
-    func fetchNextUsers(seed: String, page: Int, batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntity)
-    func fetchNewUsers(batchSize: Int) async throws -> ([UserEntity], PaginationInfoEntity)
+    func fetchInitialUsers(batchSize: Int) async throws -> [UserEntity]
+    func fetchNewUsers(batchSize: Int) async throws -> [UserEntity]
 }
